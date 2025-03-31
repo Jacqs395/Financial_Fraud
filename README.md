@@ -21,7 +21,7 @@ This dataset contained a mix of discrete and continuous variables:
 
 
 
-## Exploratory Data Analyses: Univariate, Bivariate & Multivariate
+## Part I: Exploratory Data Analyses: Univariate, Bivariate & Multivariate
 ## Key Insights: 
 * Imbalanced Dataset: the dataset is imbalanced. Non-fraudulent transactions easily outnumbered fraudulent transactions.
 * Transactions with highest fraud: Cash_Out and Transfer were the types with the most fraud. 
@@ -65,6 +65,37 @@ This dataset contained a mix of discrete and continuous variables:
 * there seemed to be a high correlation between oldbalance Org, newbalanceOrig, amount and transaction type, in detecting fraud
 
 ![alt text](image-8.png)
+
+## Part II: Data Cleaning, Wrangling & Pre-Processing
+## Key Insights: 
+* there were no missing values. Duplicates were found and dropped. 
+* the following columns were dropped: step, nameOrig, nameDest & isFlaggedFraud. These columns were not as interesting to me as the others, or they had minimal information that did not seem relevant to what I wanted my models to train on. As I was performing EDA on various columns, I decided that I was not really interested in the "step" data. Analyzing "isFraud" clearly showed that most fraudulent activities were occuring in two specific transaction types: transfers and cash_out. The timeframe of when the fraud occurred was not important to me. I was also not interested in the name of the origin account, or the name of the destination account. What mattered most was the type of transactions where fraud was prevalent, and also the amount. 
+* StandardScaler was applied to numerical columns, to normalize distributions and improve model performance. 
+* One-hot encoder was applied to "type", converting it from categorical to numerical. 
+* Dummy variables were created for all transaction types
+
+## Part III: Models
+## Key Insights: 
+# Logistic Regression and Naive Bayes were the two classifiers used. 
+
+# Train-Test-Split
+* The purpose of Train-Test-Split is to divide the dataset into a training set and a testing set. The training set is used to train the model. The testing set is used to test the model's performance after it has been trained. 
+* The "isFraud" column was chosen as the target (i.e. the y value). This column indicates whether a transaction is fraud or not. 
+* 20% of the data was used for testing (test_size=0.2), and the remaining 80% was used for training. 
+* stratify=y is used to ensure that "fraud vs. non-fraud" distribution is preserved in the testing and training sets. 
+
+# SMOTE (Synthetic Minority Over-sampling Technique)
+* smote = SMOTE(random_state=42)
+X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
+
+* The purpose of SMOTE is to balance an imbalanced dataset by creating synthetic samples of the minority class. This dataset was severely imbalanced with non-fraudulent transactions over-powering fraudulent transactions (aka "the minority class"). 
+* SMOTE was applied once train-test-split was completed. 
+* the "smote.fit_resample" portion was used to balance the dataset so that there was an equal amount of fraudulent and non-fraudulent transactions in the training set. I felt that this was beneficial to the model, allowing it to consider both conditions equally. 
+
+# Logistic Regression Classifier
+
+
+
 
 
 
