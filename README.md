@@ -28,6 +28,7 @@ This dataset contained a mix of discrete and continuous variables:
 * Indicators of fraud: features like amount and balance changes were important indicators of fraud
 
 # Univariate Analysis
+## Key Insights:
 * In this dataset, the majority of transactions were not fraudulent. Approximately 0.1% of transactions were fraudulent. 
 
 ![alt text](image.png)
@@ -49,8 +50,8 @@ This dataset contained a mix of discrete and continuous variables:
 
 # Bivariate Analysis
 ## Key Insights:
-* fraudulent transactions had different distribution patterns, compared to non-fraudulent ones
-* fraudulent transactions had higher amounts, compared to legitimate transactions
+* Fraudulent transactions had different distribution patterns, compared to non-fraudulent ones
+* Fraudulent transactions had higher amounts, compared to legitimate transactions
 * Transfer and Cash_Out transactions had the highest incidents of fraud, whereas Payment and Debit had low rates of fraud. 
 
 ![alt text](image-6.png)
@@ -61,15 +62,15 @@ This dataset contained a mix of discrete and continuous variables:
 
 # Multivariate Analysis
 ## Key Insights:
-* fraudulent transactions often had a zero or unchanged balance after the transaction, which seemed unusual, in my opinion. 
-* there seemed to be a high correlation between oldbalance Org, newbalanceOrig, amount and transaction type, in detecting fraud
+* Fraudulent transactions often had a zero or unchanged balance after the transaction, which seemed unusual, in my opinion. 
+* There seemed to be a high correlation between oldbalance Org, newbalanceOrig, amount and transaction type, in detecting fraud
 
 ![alt text](image-8.png)
 
 # Part II: Data Cleaning, Wrangling & Pre-Processing
 ## Key Insights: 
-* there were no missing values. Duplicates were found and dropped. 
-* the following columns were dropped: step, nameOrig, nameDest & isFlaggedFraud. These columns were not as interesting to me as the others, or they had minimal information that did not seem relevant to what I wanted my models to train on. As I was performing EDA on various columns, I decided that I was not really interested in the "step" data. Analyzing "isFraud" clearly showed that most fraudulent activities were occuring in two specific transaction types: transfers and cash_out. The timeframe of when the fraud occurred was not important to me. I was also not interested in the name of the origin account, or the name of the destination account. What mattered most was the type of transactions where fraud was prevalent, and also the amount. 
+* There were no missing values. Duplicates were found and dropped. 
+* The following columns were dropped: step, nameOrig, nameDest & isFlaggedFraud. These columns were not as interesting to me as the others, or they had minimal information that did not seem relevant to what I wanted my models to train on. As I was performing EDA on various columns, I decided that I was not really interested in the "step" data. Analyzing "isFraud" clearly showed that most fraudulent activities were occuring in two specific transaction types: transfers and cash_out. The timeframe of when the fraud occurred was not important to me. I was also not interested in the name of the origin account, or the name of the destination account. What mattered most was the type of transactions where fraud was prevalent, and also the amount. 
 * StandardScaler was applied to numerical columns, to normalize distributions and improve model performance. 
 * One-hot encoder was applied to "type", converting it from categorical to numerical. 
 * Dummy variables were created for all transaction types
@@ -89,7 +90,7 @@ X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
 
 * The purpose of SMOTE is to balance an imbalanced dataset by creating synthetic samples of the minority class. This dataset was severely imbalanced with non-fraudulent transactions over-powering fraudulent transactions (aka "the minority class"). 
 * SMOTE was applied once train-test-split was completed. 
-* the "smote.fit_resample" portion was used to balance the dataset so that there was an equal amount of fraudulent and non-fraudulent transactions in the training set. I felt that this was beneficial to the model, allowing it to consider both conditions equally. 
+* "smote.fit_resample" portion was used to balance the dataset so that there was an equal amount of fraudulent and non-fraudulent transactions in the training set. I felt that this was beneficial to the model, allowing it to consider both conditions equally. 
 
 ## Logistic Regression Classifier
 ### Key Insights: 
